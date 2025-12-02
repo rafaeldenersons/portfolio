@@ -279,21 +279,22 @@ html {
 }
 
 /* QR wrapper (rodapé) */
+/* QR wrapper (rodapé) */
 .qr-wrapper {
   margin-right: 1rem;
   display: inline-block;
   vertical-align: middle;
 }
 
-/* imagem do QR - tamanho em pixels (149px ≈ 3.94cm @96dpi) */
+/* Use centímetros exatos para 3,94 cm x 3,94 cm */
 .qr-image {
-  width: 149px;       /* ou use 3.94cm se preferir unidade física (ver nota abaixo) */
-  height: 149px;
+  width: 3.94cm;
+  height: 3.94cm;
   object-fit: contain;
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.04);
   background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  display:block;
+  display: block;
 }
 
 /* alternativa: usar centímetros exatos (use apenas um dos dois blocos: px ou cm)
