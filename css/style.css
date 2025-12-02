@@ -280,23 +280,17 @@ html {
 
 /* QR wrapper (rodapé) */
 /* QR wrapper (rodapé) */
-.qr-wrapper {
-  margin-right: 1rem;
-  display: inline-block;
-  vertical-align: middle;
-}
+.qr-wrapper { margin-right: 1rem; display:inline-block; vertical-align:middle; }
 
-/* Use centímetros exatos para 3,94 cm x 3,94 cm */
 .qr-image {
-  width: 3.94cm;
-  height: 3.94cm;
+  width: 149px;
+  height: 149px;
   object-fit: contain;
   border-radius: 6px;
   border: 1px solid rgba(255,255,255,0.04);
   background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  display: block;
+  display:block;
 }
-
 /* alternativa: usar centímetros exatos (use apenas um dos dois blocos: px ou cm)
 .qr-image { width: 3.94cm; height: 3.94cm; } 
 */
