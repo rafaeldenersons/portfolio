@@ -358,12 +358,25 @@
       <div class="logo small">RDRS</div>
       <div class="copy">© Rafael Denerson Ramos de Sousa — Todos os direitos reservados</div>
     </div>
+
     <div class="footer-right">
-      <div class="qr-placeholder" aria-hidden="true">QR Code</div>
-      <a href="#top" class="back-top">Voltar ao topo</a>
+      <!-- QR: imagem com atributo alt e role apropriado -->
+      <figure class="qr-wrapper" aria-hidden="false">
+        <img
+          src="assets/qr-code.png"
+          alt="QR code para contato / currículo"
+          class="qr-image"
+          width="149" height="149"
+        />
+        <figcaption class="sr-only">QR Code — aponte a câmera para abrir o currículo</figcaption>
+      </figure>
+
+      <!-- link Voltar ao topo -->
+      <a href="#top" class="back-top" id="backTop" role="button" aria-label="Voltar ao topo">Voltar ao topo</a>
     </div>
   </div>
 </footer>
+
 
 <script src="js/main.js"></script>
 </body>
