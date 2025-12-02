@@ -272,6 +272,65 @@ body{
 .footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
 .qr-placeholder{ background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:.6rem; border-radius:8px; border:1px dashed rgba(255,255,255,0.04); }
 
+/* garante que se rolemos para âncoras, o header fixo não as esconda */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* ajustar para a altura do seu header + folga (72px + 12px) */
+}
+
+/* QR wrapper (rodapé) */
+.qr-wrapper {
+  margin-right: 1rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* imagem do QR - tamanho em pixels (149px ≈ 3.94cm @96dpi) */
+.qr-image {
+  width: 149px;       /* ou use 3.94cm se preferir unidade física (ver nota abaixo) */
+  height: 149px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  display:block;
+}
+
+/* alternativa: usar centímetros exatos (use apenas um dos dois blocos: px ou cm)
+.qr-image { width: 3.94cm; height: 3.94cm; } 
+*/
+
+/* espaçamento e estilo do link "Voltar ao topo" */
+.back-top {
+  display:inline-block;
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:600;
+  padding:0.45rem 0.7rem;
+  border-radius:8px;
+  margin-left:0.5rem;
+  transition: all var(--transition-fast) ease;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+.back-top:hover,
+.back-top:focus {
+  color:var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+  border-color: rgba(191,164,90,0.14);
+  background: rgba(255,255,255,0.01);
+}
+
+/* esconder o figcaption visualmente, mas manter para leitores de tela */
+.sr-only {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
 /* responsiveness: mobile-first */
 @media (max-width:980px){
   .nav{ display:none; }
