@@ -55,4 +55,46 @@ document.addEventListener('DOMContentLoaded', function(){
       a.addEventListener('click', ()=>{ mobileMenu.hidden = true; menuToggle.setAttribute('aria-expanded','false'); });
     });
   }
+    if(mobileMenu){
+    mobileMenu.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click', ()=>{ 
+        mobileMenu.hidden = true; 
+        menuToggle.setAttribute('aria-expanded','false'); 
+      });
+    });
+  }
+
+  /* -----------------------------------------------------------
+     Smooth Back-to-top + Ajuste de âncoras com header fixo
+     ----------------------------------------------------------- */
+
+  const backTop = document.getElementById('backTop');
+  if (backTop) {
+    backTop.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // scroll suave com compensação da altura do header fixo
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function (ev) {
+      const href = a.getAttribute('href');
+      if (!href || href === '#' || href === '#!') return;
+
+      const target = document.querySelector(href);
+      if (target) {
+        ev.preventDefault();
+        const headerOffset = 72 + 12; // altura do header + folga
+        const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - headerOffset;
+
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        history.pushState(null, '', href);
+      }
+    });
+  });
+
+});
+
 });
