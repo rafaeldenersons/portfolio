@@ -68,13 +68,15 @@ document.addEventListener('DOMContentLoaded', function(){
      Smooth Back-to-top + Ajuste de âncoras com header fixo
      ----------------------------------------------------------- */
 
-  const backTop = document.getElementById('backTop');
-  if (backTop) {
-    backTop.addEventListener('click', function (e) {
-      e.preventDefault();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
+  // Back-to-top smooth (versão com ajuste de hash opcional)
+const backTop = document.getElementById('backTop');
+if (backTop) {
+  backTop.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.replaceState(null, '', '#top');
+  });
+}
 
   // scroll suave com compensação da altura do header fixo
   document.querySelectorAll('a[href^="#"]').forEach(a => {
