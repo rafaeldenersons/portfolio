@@ -286,11 +286,6 @@ html {
   scroll-padding-top: 84px; /* ajustar para a altura do seu header + folga (72px + 12px) */
 }
 
-/* generic QR wrapper placeholder removed — we'll define consolidated block below */
-
-/* smooth scrolling (redudante? keep single declaration) */
-html{ scroll-behavior:smooth; }
-
 /* focus / accessibility */
 :focus{ outline-offset:3px; }
 :focus:not(:focus-visible){ outline: none; }
@@ -309,7 +304,6 @@ a:focus, button:focus, .project-card:focus{
 /* This block replaces previous fragmented footer/qr rules. Keep at EOF. */
 
 .site-footer {
-  /* keep some consistency with above but harmless if repeated */
   margin-top: 2rem;
   padding: 1.6rem 0;
   border-top: 1px solid rgba(255,255,255,0.02);
