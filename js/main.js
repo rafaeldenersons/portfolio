@@ -1,4 +1,4 @@
-// main.js — interações leves, acessibilidade e ajuste dinâmico do footer (QR + botão)
+// main__.js — interações leves, acessibilidade e ajuste dinâmico do footer (QR + botão)
 // Versão revisada: mais defensiva, comentada e com pequenas melhorias de desempenho.
 
 /* utility: debounce */
@@ -10,10 +10,7 @@ function debounce(fn, wait = 100){
   };
 }
 
-/* ----------------------- MENU / MOBILE -----------------------
-   - toggle do botão mobile: controla aria-expanded e o atributo hidden do mobileMenu
-   - se o mobileMenu não existir, alterna a nav (fallback)
-*/
+/* ----------------------- MENU / MOBILE ----------------------- */
 (function(){
   const menuToggle = document.getElementById('menuToggle');
   const nav = document.querySelector('.nav');
@@ -27,16 +24,13 @@ function debounce(fn, wait = 100){
     menuToggle.setAttribute('aria-expanded', newVal);
 
     if (mobileMenu) {
-      // toggle hidden + aria-hidden for accessibility
       mobileMenu.hidden = expanded;
       mobileMenu.setAttribute('aria-hidden', String(expanded));
     } else if (nav) {
-      // fallback: toggle display
       nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
     }
   });
 
-  // close mobile menu when a link inside it is clicked
   if (mobileMenu && menuToggle) {
     mobileMenu.querySelectorAll('a').forEach(a => {
       a.addEventListener('click', () => {
@@ -54,11 +48,10 @@ function debounce(fn, wait = 100){
   const navLinks = Array.from(document.querySelectorAll('.nav a'));
 
   if (sections.length && navLinks.length) {
-    // cached offsets compute function — we compute on scroll; lightweight approach
     const getOffset = el => el.getBoundingClientRect().top + window.scrollY;
 
     function changeActive(){
-      const scrollPos = window.scrollY + 140; // offset to consider header and a bit of margin
+      const scrollPos = window.scrollY + 140;
       let currentIndex = 0;
       for (let i = 0; i < sections.length; i++){
         if (getOffset(sections[i]) <= scrollPos) currentIndex = i;
@@ -83,7 +76,6 @@ function debounce(fn, wait = 100){
 
   // keyboard 's' jump to main (accessible shortcut)
   document.addEventListener('keydown', (e) => {
-    // avoid triggering in inputs
     const tag = (document.activeElement && document.activeElement.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable) return;
 
@@ -94,10 +86,7 @@ function debounce(fn, wait = 100){
   });
 })();
 
-/* ----------------------- SMOOTH ANCHORS + BACK TO TOP -----------------------
-   - Smooth scrolling to anchors while accounting for fixed header.
-   - Ensures history state updated where possible.
-*/
+/* ----------------------- SMOOTH ANCHORS + BACK TO TOP ----------------------- */
 (function(){
   const backTop = document.getElementById('backTop');
   const topAnchor = document.getElementById('top');
@@ -163,7 +152,7 @@ function debounce(fn, wait = 100){
     const right = footerInner.querySelector('.footer-right');
     if (!left || !right) return;
 
-    // when stacked (mobile), ensure no transform
+    // when stacked (mobile), we don't transform
     if (footerShouldSkip(footerInner)) {
       right.style.transform = 'none';
       return;
@@ -175,15 +164,16 @@ function debounce(fn, wait = 100){
     const backBtn = right.querySelector('.back-top');
     if (!backBtn) return;
 
-    // measure positions
+    // measure positions (defensive: ensure values exist)
     const leftRect = left.getBoundingClientRect();
     const backRect = backBtn.getBoundingClientRect();
+    if (!leftRect || !backRect) return;
 
     const leftCenterY = leftRect.top + leftRect.height / 2;
     const backCenterY = backRect.top + backRect.height / 2;
 
-    // If back is lower than left, we need to move right block upwards
-    let delta = backCenterY - leftCenterY; // positive => back is lower than left
+    // If back is lower than left, delta positive => we need to move right upwards
+    let delta = backCenterY - leftCenterY; // positive => back is lower
 
     // caps from CSS variables
     const capDesktop = parseCap('--qr-raise-cap-desktop', 40);
