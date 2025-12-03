@@ -286,22 +286,4 @@ a:focus, button:focus, .project-card:focus{
   .footer-right { transform: none !important; }
 }
 
-/* --------- Estilo para listas (bullet points) --------- */
-
-/* Estilo para as bolinhas (marcadores) nas sublistas de educação */
-.edu-sublist li::marker {
-  color: var(--accent); /* Cor amarela definida na variável de cor --accent */
-  font-weight: 600;      /* Peso da fonte mais forte para as bolinhas */
-  font-size: 1rem;       /* Tamanho de fonte das bolinhas */
-}
-
-/* Estilo para as bolinhas de qualquer lista não ordenada (ul) no site */
-ul li::marker {
-  color: var(--accent); /* Cor amarela definida na variável de cor --accent */
-  font-weight: 600;      /* Peso da fonte mais forte para as bolinhas */
-}
-
-/* --------- Final da estilização das listas --------- */
-
-
 /* ---------- END OF FILE ---------- */
