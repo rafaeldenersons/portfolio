@@ -164,3 +164,46 @@
    em vez de apenas .qr-image.
 5) Para alterar tamanho do QR globalmente, edite --qr-size acima. 
 -------------------------------------------------------------------- */
+/* ---------- Elevar (suspender) o bloco QR + botão; centralizar alinhamento com a esquerda ---------- */
+
+/* variável para controlar o "raise" (valor negativo sobe o bloco) */
+:root {
+  --qr-raise-desktop: -18px; /* valor sugerido para desktop — ajuste fino se necessário */
+  --qr-raise-tablet:  -12px; /* valor para telas médias */
+  --qr-raise-mobile:   -8px;  /* valor para telas pequenas */
+  --qr-raise-transition: 180ms; /* animação suave ao carregar/alterar */
+}
+
+/* aplica a elevação ao bloco direito inteiro (legenda + QR + botão) */
+.footer-right {
+  /* já tem display:flex; usamos transform para mover verticalmente */
+  transform: translateY(var(--qr-raise-desktop));
+  transition: transform var(--qr-raise-transition) ease;
+  will-change: transform;
+  /* garante que o elemento não afete o fluxo visual (mesmo subindo) */
+}
+
+/* pequena suavização visual quando o usuário passa o mouse (opcional) */
+.footer-right:hover {
+  transform: translateY(calc(var(--qr-raise-desktop) - 6px));
+}
+
+/* quando o conteúdo do footer ocupar várias linhas (responsividade), ajustar raise */
+@media (max-width: 980px) {
+  .footer-right {
+    transform: translateY(var(--qr-raise-tablet));
+  }
+}
+
+@media (max-width: 720px) {
+  .footer-right {
+    transform: translateY(var(--qr-raise-mobile));
+  }
+}
+
+/* garantia: manter alinhamento da legenda em relação ao QR (sem mudanças necessárias,
+   já que transform afeta todo o bloco). Mas certifique-se que a legenda permaneça legível: */
+.qr-caption { z-index: 6; }
+
+/* se algum outro CSS sobrescrever transform, aumente especificidade:
+   footer.site-footer .footer-right { ... } */
