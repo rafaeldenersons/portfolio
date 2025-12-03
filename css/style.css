@@ -1,490 +1,83 @@
-/* style.css — Luxurious dark portfolio (mobile-first)
-   Variables & theme */
+/* ---------- Footer: QR — bloco consolidado (legenda 3 linhas acima do QR + botão centralizado) ----------
+   Este bloco substitui regras antigas duplicadas. Mantém responsividade e acessibilidade.
+   - Posicione este bloco NO FINAL de css/style.css (após qualquer outro código).
+   - Ajuste `--qr-size` se quiser alterar o tamanho do QR globalmente. */
+
 :root{
-  --bg:#040405;
-  --surface:#0d0d10;
-  --muted:#9aa0a6;
-  --accent:#bfa45a;
-  --soft:#141416;
-  --glass: rgba(255,255,255,0.03);
-  --card-radius:16px;
-  --gap:1.25rem;
-  --max-width:1100px;
-  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-  --font-display: 'Poppins', var(--font-sans);
-  --font-alt: 'Montserrat', var(--font-sans);
-  --transition-fast: .18s;
-  --transition-mid: .22s;
+  /* Variável local para facilitar ajustes futuros do QR */
+  --qr-size: 184px; /* aproximadamente 4.87cm em 96dpi */
 }
 
-/* reset + sensible defaults */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-html,body { height:100%; }
-html { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-body{
-  margin:0;
-  font-family:var(--font-sans);
-  background:linear-gradient(180deg,var(--bg),#070708 70%);
-  color:#e6e7e8;
-  line-height:1.45;
-  padding-top:72px;
-  transition: background var(--transition-mid) ease;
-  -webkit-text-size-adjust:100%;
-}
-
-/* skip link */
-.skip-link{
-  position:fixed; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
-}
-.skip-link:focus{
-  left:1rem; top:1rem; width:auto; height:auto; background:#111; padding:.5rem .75rem;
-  border-radius:6px; color:var(--accent); z-index:9999;
-}
-
-/* layout */
-.container{
-  width:100%;
-  max-width:var(--max-width);
-  margin:0 auto;
-  padding:0 1rem;
-}
-
-/* header */
-.site-header{
-  position:fixed;
-  top:0; left:0; right:0;
-  height:72px;
-  display:flex;
-  align-items:center;
-  backdrop-filter: blur(6px);
-  background:linear-gradient(180deg, rgba(6,6,8,0.6), rgba(6,6,8,0.45));
-  border-bottom:1px solid rgba(255,255,255,0.02);
-  z-index:50;
-}
-
-.header-inner{ display:flex; align-items:center; justify-content:space-between; gap:var(--gap); width:100%; }
-
-.brand{ display:flex; align-items:center; gap:.75rem; }
-.logo{
-  font-family:var(--font-display); font-weight:700; font-size:1.05rem;
-  padding:.25rem .6rem; border-radius:8px;
-  background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-  color:#fff;
-}
-.name{ font-size:.85rem; color:var(--muted); }
-
-/* nav */
-.nav{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
-.nav a{
-  color:var(--muted); text-decoration:none; font-size:.9rem;
-  padding:.6rem; border-radius:8px; transition: all var(--transition-mid) ease;
-}
-.nav a:hover, .nav a.active{
-  color:var(--accent); transform:translateY(-2px); outline:0;
-}
-
-/* CTA */
-.btn-cv{
-  background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  padding:.5rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
-  font-weight:600; color:#fff; text-decoration:none; display:inline-block;
-}
-
-/* mobile menu toggle */
-.menu-toggle{
-  display:none;
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-size:1.1rem;
-  padding:.5rem;
-  border-radius:8px;
-}
-
-/* hero */
-.hero{ padding:3.2rem 0 1.6rem; position:relative; overflow:visible; }
-.hero-bg{
-  position:absolute; inset:0;
-  background-image:
-    radial-gradient(circle at 10% 10%, rgba(191,164,90,0.05), transparent 8%),
-    radial-gradient(circle at 90% 80%, rgba(255,255,255,0.02), transparent 12%);
-  pointer-events:none; transform:translateZ(0); will-change:transform;
-}
-.hero-inner{
-  position:relative;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  padding:2rem;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.02);
-}
-
-/* typography */
-.hero h1{ font-family:var(--font-display); font-weight:700; margin:0 0 .5rem; font-size:1.6rem; }
-.lead{ color:var(--muted); margin:0 0 .5rem; }
-.muted{ color:var(--muted); }
-
-/* cards & sections */
-.card-section{ margin:2rem 0; padding:0; }
-.card{
-  background:var(--surface);
-  padding:1.15rem;
-  border-radius:var(--card-radius);
-  border:1px solid rgba(255,255,255,0.02);
-}
-
-/* grid utilities */
-.grid{ display:grid; gap:1rem; }
-.skills-grid{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:1rem; }
-
-/* skill cards (glass) */
-.skill-card{
-  background:var(--glass);
-  padding:1rem;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.02);
-  font-weight:600;
-  min-height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition: transform var(--transition-mid) ease, box-shadow var(--transition-mid) ease;
-}
-.skill-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 12px 36px rgba(0,0,0,0.6);
-  border-color:rgba(191,164,90,0.12);
-}
-
-/* timeline */
-.timeline{ display:flex; flex-direction:column; gap:1rem; margin-top:1rem; }
-.timeline-item{
-  display:flex; gap:1rem; align-items:flex-start;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  padding:1rem; border-radius:12px; border:1px solid rgba(255,255,255,0.02);
-  transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
-}
-.timeline-icon{
-  min-width:48px; height:48px; border-radius:8px; background:var(--soft);
-  display:flex; align-items:center; justify-content:center; font-size:1.1rem;
-}
-.timeline-item:focus-within,
-.timeline-item:hover{
-  transform:translateY(-6px); box-shadow:0 18px 50px rgba(0,0,0,0.6);
-}
-
-/* projects */
-.projects-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1rem; margin-top:1rem; }
-.project-card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-  border-radius:12px; border:1px solid rgba(255,255,255,0.02);
-  overflow:hidden; display:flex; flex-direction:column;
-  transition: transform var(--transition-mid) ease, box-shadow var(--transition-mid) ease;
-  outline:0;
-}
-.project-card:hover,
-.project-card:focus{ transform:translateY(-8px); box-shadow:0 26px 80px rgba(0,0,0,0.65); border-color:rgba(191,164,90,0.18); }
-
-.project-media img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  display:block;
-  background:#111;
-  max-width:100%;
-}
-
-/* small screens: slightly smaller project image */
-@media (max-width:480px){
-  .project-media img{ height:160px; }
-}
-
-/* project body */
-.project-body{ padding:1rem; }
-.project-body h3{ font-family:var(--font-alt); margin-top:0; }
-
-/* education & publications */
-.edu-list{
-  list-style:none;
-  padding:0;
-  margin:1rem 0;
-  display:grid;
-  gap:0.6rem;
-}
-.edu-card{
-  background:var(--glass);
-  padding:0.8rem;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.02);
-}
-
-/* SUBLIST PARA AS PÓS-GRADUAÇÕES (estilizada) */
-.edu-sublist{
-  margin-top:0.5rem;
-  padding-left:1.2rem;
-  list-style:disc;
-  opacity:0.95;
-  color:var(--muted);
-}
-.edu-sublist li{ margin-bottom:0.25rem; }
-
-/* estilizar marcador (suporte moderno) */
-.edu-sublist li::marker{
-  color:var(--accent);
-  font-weight:600;
-  font-size:.95em;
-}
-
-/* publications grid */
-.pubs-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:1rem;
-  margin-top:1rem;
-}
-.pub-card{
-  padding:1rem;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.02);
-}
-
-/* certs */
-.certs-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:.8rem;
-  margin-top:1rem;
-}
-.cert-card{
-  background:var(--glass);
-  padding:.6rem;
-  border-radius:8px;
-  border:1px solid rgba(255,255,255,0.02);
-  text-align:center;
-  font-weight:600;
-}
-
-/* footer */
-.site-footer{ margin-top:2rem; padding:1.4rem 0; border-top:1px solid rgba(255,255,255,0.02); }
-.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-.qr-placeholder{ background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent); padding:.6rem; border-radius:8px; border:1px dashed rgba(255,255,255,0.04); }
-
-/* garante que se rolemos para âncoras, o header fixo não as esconda */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 84px; /* ajustar para a altura do seu header + folga (72px + 12px) */
-}
-
-/* QR wrapper (rodapé) */
-/* QR wrapper (rodapé) */
-.qr-wrapper { margin-right: 1rem; display:inline-block; vertical-align:middle; }
-
-.qr-image {
-  width: 149px;
-  height: 149px;
-  object-fit: contain;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.04);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  display:block;
-}
-/* alternativa: usar centímetros exatos (use apenas um dos dois blocos: px ou cm)
-.qr-image { width: 3.94cm; height: 3.94cm; } 
-*/
-
-/* espaçamento e estilo do link "Voltar ao topo" */
-.back-top {
-  display:inline-block;
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:600;
-  padding:0.45rem 0.7rem;
-  border-radius:8px;
-  margin-left:0.5rem;
-  transition: all var(--transition-fast) ease;
+/* footer base (ligeira diferença do seu bloco genérico; mantém margem/espacamento) */
+.site-footer {
+  margin-top: 2rem;
+  padding: 1.6rem 0;
+  border-top: 1px solid rgba(255,255,255,0.02);
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.02);
-}
-.back-top:hover,
-.back-top:focus {
-  color:var(--accent);
-  transform: translateY(-2px);
-  outline: none;
-  border-color: rgba(191,164,90,0.14);
-  background: rgba(255,255,255,0.01);
 }
 
-/* esconder o figcaption visualmente, mas manter para leitores de tela */
-.sr-only {
-  position: absolute !important;
-  height: 1px; width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap;
+/* container interno: manter layout flexível (esquerda + direita) */
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: nowrap;
 }
 
-/* responsiveness: mobile-first */
-@media (max-width:980px){
-  .nav{ display:none; }
-  .menu-toggle{ display:block; }
-  .header-inner{ padding:.4rem .2rem; }
-  .hero h1{ font-size:1.25rem; }
-  body{ padding-top:64px; }
-  .project-media img{ height:180px; }
-  .hero-bg{ background-position:center; opacity:0.9; }
+/* esquerda: logo/copyright (ocupa espaço disponível) */
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
-/* larger screens */
-@media (min-width:981px){
-  .timeline{ flex-direction:column; }
-  .hero h1{ font-size:1.9rem; }
-}
-
-/* smooth scrolling */
-html{ scroll-behavior:smooth; }
-
-/* focus / accessibility */
-:focus{ outline-offset:3px; }
-:focus:not(:focus-visible){ outline: none; }
-a:focus, button:focus, .project-card:focus{
-  outline:2px solid rgba(191,164,90,0.16);
-  outline-offset:3px;
-  border-radius:8px;
-}
-
-/* prefers reduced motion */
-@media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
-}
-
-/* prefers reduced motion */
-@media (prefers-reduced-motion: reduce){
-  *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
-}
-
-/* ---------- Footer: QR - legenda em 3 linhas centralizada no topo do QR ---------- */
-
-/* figura posicionada para permitir posicionamento absoluto da legenda */
-.qr-wrapper {
-  position: relative;
+/* direita: QR (em coluna) + botão (centralizados) */
+.footer-right {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding-top: 22px; /* cria espaço superior para a legenda quando necessário */
-}
-
-/* legenda: centralizada horizontalmente, posicionada sobre/na borda superior da imagem */
-.qr-caption {
-  position: absolute;
-  left: 50%;
-  top: 6px; /* distância da borda superior da figura -> ajustável */
-  transform: translateX(-50%);
-  width: 190px;          /* largura baseada no QR para 'quase igual' visual entre linhas */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: center; /* centraliza QR e botão horizontalmente */
+  gap: .6rem;
+  flex: 0 0 auto;
   justify-content: center;
-  gap: 2px;
-  pointer-events: none;  /* evita que a legenda capture cliques no QR */
-  text-align: center;
-  z-index: 5;
+  padding-left: 1rem;
 }
 
-/* cada linha é um bloco; usar font-size e line-height confortáveis */
-.qr-line {
-  display: block;
-  font-size: 0.82rem;
-  line-height: 1.02;
-  color: var(--muted);
-  font-weight: 600;
-  letter-spacing: 0.0px;
-  word-break: break-word;
-  width: 100%;
-}
-
-/* estilo opcional visual para destacar e garantir contraste ao sobrepor a imagem */
-.qr-caption {
-  background: rgba(4,4,5,0.55);   /* leve "backdrop" escuro para garantir leitura */
-  padding: 6px 8px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.03);
-  backdrop-filter: blur(4px);
-}
-
-/* QR imagem: mantemos tamanho proeminente */
-.qr-image {
-  width: 184px;
-  height: 184px;
-  object-fit: contain;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.04);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  display: block;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.55);
-  margin-top: 10px; /* garante separação caso legenda não sobreponha */
-}
-
-/* botão abaixo do QR */
-.footer-right .back-top {
-  margin-top: 0.75rem;
-}
-
-/* MOBILE adjustments */
-@media (max-width: 720px) {
-  .qr-wrapper { padding-top: 14px; }
-  .qr-caption {
-    top: 2px;
-    width: 70vw;
-    max-width: 260px;
-    padding: 6px 10px;
-  }
-  .qr-line { font-size: 0.9rem; }
-  .qr-image {
-    width: 36vw;
-    max-width: 184px;
-    height: auto;
-  }
-}
-
-/* optional: when you prefer the caption entirely above (not overlapping),
-   adjust top to a negative value and remove background. Example:
-   .qr-caption { top: -56px; background: transparent; padding:0; } */
-
-/* ---------- Ajustes finos: legenda acima do QR + botão centralizado ---------- */
-
-/* referência para posicionamento absoluto da legenda */
+/* ---------- QR wrapper (posicionamento para legenda absoluta) ---------- */
 .qr-wrapper {
-  position: relative;
+  position: relative;          /* contexto para .qr-caption (absolute) */
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0;
-  padding-top: 8px; /* mantém espaçamento interno se necessário */
+  padding-top: 8px;            /* espaço interno caso precise */
+  vertical-align: middle;
 }
 
-/* legenda posicionada MAIS ACIMA (sem sobrepor o QR) */
+/* ---------- Legenda (3 linhas), posicionada acima do QR, sem sobreposição ---------- */
+/* Usamos pointer-events:none para não bloquear clique no link do QR. */
 .qr-caption {
   position: absolute;
   left: 50%;
-  top: -62px;              /* <<-- ajuste principal: controla distância acima da imagem */
+  top: -62px;                  /* ajuste principal: distância acima da imagem */
   transform: translateX(-50%);
-  width: 200px;            /* largura compatível com QR (ajuste se quiser) */
+  width: 200px;                /* largura que define "quase iguais" para as 3 linhas */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  pointer-events: none;    /* não bloqueia cliques no QR */
+  pointer-events: none;
   text-align: center;
   z-index: 5;
-  background: transparent; /* sem fundo para não bloquear/escurecer o QR */
-  padding: 0;              /* legenda limpa, sem caixa por default */
+  background: transparent;     /* sem bloco por padrão (mantém QR limpo) */
+  padding: 0;
+  line-break: normal;
+  /* Se precisar de contraste em fundos complexos, substituir background por rgba(4,4,5,.55) e adicionar padding */
 }
 
-/* linhas da legenda (3 linhas) */
+/* cada linha da legenda — texto consistente e legível */
 .qr-line {
   display: block;
   font-size: 0.86rem;
@@ -493,12 +86,13 @@ a:focus, button:focus, .project-card:focus{
   font-weight: 600;
   letter-spacing: 0;
   width: 100%;
+  word-break: break-word;
 }
 
-/* QR imagem mantém destaque */
+/* ---------- Imagem do QR (tamanho controlado por variável) ---------- */
 .qr-image {
-  width: 184px;
-  height: 184px;
+  width: var(--qr-size);
+  height: var(--qr-size);
   object-fit: contain;
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.04);
@@ -508,31 +102,65 @@ a:focus, button:focus, .project-card:focus{
   margin-top: 8px;
 }
 
-/* Botão centralizado horizontalmente com relação à figura do QR.
-   Mantemos a posição abaixo da imagem (vertical inalterada), mas agora
-   ele fica exatamente no centro horizontal do QR. */
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* garante centralização horizontal do conteúdo (QR + botão) */
-  gap: .6rem;
-  flex: 0 0 auto;
-  justify-content: center;
-  padding-left: 1rem;
-}
-
-/* botao voltar: largura auto, centralizado pela regra acima */
+/* ---------- Botão "Voltar ao topo" (abaixo do QR, centralizado) ---------- */
 .footer-right .back-top {
   margin-top: 0.75rem;
   align-self: center;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  padding: 0.48rem 0.85rem;
+  border-radius: 10px;
+  transition: all var(--transition-fast) ease;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.02);
+}
+.footer-right .back-top:hover,
+.footer-right .back-top:focus {
+  color: var(--accent);
+  transform: translateY(-2px);
+  outline: none;
+  border-color: rgba(191,164,90,0.14);
+  background: rgba(255,255,255,0.01);
+}
+.footer-right .back-top:focus {
+  box-shadow: 0 0 0 4px rgba(191,164,90,0.08);
+  border-color: rgba(191,164,90,0.2);
 }
 
-/* MOBILE: adaptações */
+/* ---------- Responsividade: telas pequenas ---------- */
+@media (max-width: 980px) {
+  /* se o header for colapsado, permitir empilhamento do footer também */
+  .footer-inner {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+  }
+  .footer-left { order: 1; width: 100%; justify-content: center; padding: 0 .6rem; }
+  .footer-right { order: 2; width: 100%; padding: 0 .6rem; }
+}
+
 @media (max-width: 720px) {
+  /* aproxima legenda em telas pequenas; evita que fique muito afastada */
   .qr-caption {
-    top: -56px;         /* menos deslocamento em telas pequenas */
+    top: -56px;
     width: 72vw;
     max-width: 260px;
+    padding: 0 8px;
   }
   .qr-line { font-size: 0.95rem; }
-  .qr-imag
+  .qr-image { width: 36vw; max-width: var(--qr-size); height: auto; }
+}
+
+/* ---------- Observações / dicas futuras ----------
+1) Para afastar mais a legenda do QR aumente top (ex.: top: -72px).
+2) Para melhor contraste em fundos complexos, use:
+     .qr-caption { background: rgba(4,4,5,0.55); padding:6px 8px; border-radius:10px; }
+3) Para reduzir conflitos com regras antigas, mantenha este bloco NO FINAL do CSS.
+4) Se outras regras continuarem a prevalecer, aumente a especificidade:
+     footer.site-footer .qr-image { ... }
+   em vez de apenas .qr-image.
+5) Para alterar tamanho do QR globalmente, edite --qr-size acima. 
+-------------------------------------------------------------------- */
