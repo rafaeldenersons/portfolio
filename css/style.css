@@ -20,7 +20,7 @@
 
   /* QR / footer tuning */
   --qr-size: 184px; /* controla tamanho visual do QR */
-  --qr-raise-desktop: -18px; /* deslocamento vertical (negativo = sobe) */
+  --qr-raise-desktop: -18px; /* valor usado como limite no JS */
   --qr-raise-tablet:  -12px;
   --qr-raise-mobile:   -8px;
   --qr-raise-transition: 180ms;
@@ -310,6 +310,7 @@ a:focus, button:focus, .project-card:focus{
   background: transparent;
 }
 
+/* force nowrap on large viewports; JS will detect column layout and skip adjustments */
 .footer-inner {
   display: flex;
   align-items: center;
@@ -335,8 +336,7 @@ a:focus, button:focus, .project-card:focus{
   justify-content: center;
   padding-left: 1rem;
 
-  /* apply raise by default (desktop) */
-  transform: translateY(var(--qr-raise-desktop));
+  /* no transform here — JS applies precise inline transform */
   transition: transform var(--qr-raise-transition) ease;
   will-change: transform;
 }
@@ -430,8 +430,7 @@ a:focus, button:focus, .project-card:focus{
   }
   .footer-left { order: 1; width: 100%; justify-content: center; padding: 0 .6rem; }
   .footer-right { order: 2; width: 100%; padding: 0 .6rem; }
-  /* reduce raise on medium screens */
-  .footer-right { transform: translateY(var(--qr-raise-tablet)); }
+  /* JS will use --qr-raise-tablet as limit; CSS intentionally avoids forcing transform here */
 }
 
 @media (max-width: 720px) {
@@ -443,12 +442,12 @@ a:focus, button:focus, .project-card:focus{
   }
   .qr-line { font-size: 0.95rem; }
   .qr-image { width: 36vw; max-width: var(--qr-size); height: auto; }
-  .footer-right { transform: translateY(var(--qr-raise-mobile)); }
 }
 
-/* optional hover nudge */
+/* optional hover nudge (kept small and purely visual) */
 .footer-right:hover {
-  transform: translateY(calc(var(--qr-raise-desktop) - 6px));
+  /* small nudge only on large screens — JS inline transform may combine with this */
+  transform: translateY(-2px);
 }
 
 /* end of file */
