@@ -158,6 +158,23 @@ body{
   border-color: rgba(191,164,90,0.12);
 }
 
+/* --------- Skill cards (bolinhas amarelas) --------- */
+/* Adiciona bolinhas antes do texto de cada skill-card */
+.skills-grid .skill-card {
+  position: relative;           /* necessário para posicionamento da bolinha */
+  padding-left: 1.5em;          /* cria espaço para a bolinha */
+}
+
+.skills-grid .skill-card::before {
+  content: "•";                 /* bolinha */
+  position: absolute;           
+  left: 0;                       /* alinhamento à esquerda */
+  color: #FFD700;               /* cor amarelo ouro */
+  font-size: 1.2em;             /* tamanho da bolinha */
+  line-height: 1;
+}
+
+
 /* timeline */
 .timeline{ display:flex; flex-direction:column; gap:1rem; margin-top:1rem; }
 .timeline-item{
