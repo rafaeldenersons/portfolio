@@ -354,34 +354,41 @@
 
 <footer class="site-footer" id="footer" role="contentinfo">
   <div class="container footer-inner">
+    <!-- esquerda: logo + copyright -->
     <div class="footer-left">
       <div class="logo small">RDRS</div>
       <div class="copy">© Rafael Denerson Ramos de Sousa — Todos os direitos reservados</div>
     </div>
 
+    <!-- direita: QR (em destaque) e botão Voltar ao topo abaixo -->
     <div class="footer-right">
-      <!-- QR: imagem com atributo alt e role apropriado -->
-      <!-- QR: imagem com atributo alt e figcaption acessível -->
-<figure class="qr-wrapper" aria-hidden="false">
-  <a href="assets/portifolioProfissionalPDF.pdf" target="_blank" rel="noopener noreferrer" aria-label="Abrir currículo em PDF">
-    <img
-      src="assets/qr-curriculo.svg"
-      alt="QR code para contato e download do currículo"
-      class="qr-image"
-      width="149" height="149"
-    />
-  </a>
+      <figure class="qr-wrapper" aria-hidden="false">
+        <figcaption class="qr-caption">
+          QR Code — aponte a câmera do celular.<br>ou toque na imagem.
+        </figcaption>
 
-  <!-- legenda VISIBLE (QR Code — aponte a câmera do celular para abrir o currículo (ou toque na imagem).) -->
-  <figcaption class="qr-caption">
-    QR Code — aponte a câmera do celular.
-  </figcaption>
-</figure>
-	 <!-- link Voltar ao topo -->
-      <a href="#top" class="back-top" id="backTop" role="button" aria-label="Voltar ao topo">Voltar ao topo</a>
+        <a
+          href="assets/portifolioProfissionalPDF.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Abrir currículo em PDF"
+        >
+          <img
+            src="assets/qr-curriculo.svg"
+            alt="QR code para contato e download do currículo"
+            class="qr-image"
+            width="184" height="184"
+          />
+        </a>
+      </figure>
+
+      <a href="#top" class="back-top" id="backTop" role="button" aria-label="Voltar ao topo">
+        Voltar ao topo
+      </a>
     </div>
   </div>
 </footer>
+
 <script src="js/main.js"></script>
 </body>
 </html>
