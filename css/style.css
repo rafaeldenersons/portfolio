@@ -364,3 +364,92 @@ a:focus, button:focus, .project-card:focus{
 @media (prefers-reduced-motion: reduce){
   *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
 }
+
+/* ---------- Footer: QR - legenda em 3 linhas centralizada no topo do QR ---------- */
+
+/* figura posicionada para permitir posicionamento absoluto da legenda */
+.qr-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding-top: 22px; /* cria espaço superior para a legenda quando necessário */
+}
+
+/* legenda: centralizada horizontalmente, posicionada sobre/na borda superior da imagem */
+.qr-caption {
+  position: absolute;
+  left: 50%;
+  top: 6px; /* distância da borda superior da figura -> ajustável */
+  transform: translateX(-50%);
+  width: 190px;          /* largura baseada no QR para 'quase igual' visual entre linhas */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  pointer-events: none;  /* evita que a legenda capture cliques no QR */
+  text-align: center;
+  z-index: 5;
+}
+
+/* cada linha é um bloco; usar font-size e line-height confortáveis */
+.qr-line {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.02;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.0px;
+  word-break: break-word;
+  width: 100%;
+}
+
+/* estilo opcional visual para destacar e garantir contraste ao sobrepor a imagem */
+.qr-caption {
+  background: rgba(4,4,5,0.55);   /* leve "backdrop" escuro para garantir leitura */
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(4px);
+}
+
+/* QR imagem: mantemos tamanho proeminente */
+.qr-image {
+  width: 184px;
+  height: 184px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  display: block;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.55);
+  margin-top: 10px; /* garante separação caso legenda não sobreponha */
+}
+
+/* botão abaixo do QR */
+.footer-right .back-top {
+  margin-top: 0.75rem;
+}
+
+/* MOBILE adjustments */
+@media (max-width: 720px) {
+  .qr-wrapper { padding-top: 14px; }
+  .qr-caption {
+    top: 2px;
+    width: 70vw;
+    max-width: 260px;
+    padding: 6px 10px;
+  }
+  .qr-line { font-size: 0.9rem; }
+  .qr-image {
+    width: 36vw;
+    max-width: 184px;
+    height: auto;
+  }
+}
+
+/* optional: when you prefer the caption entirely above (not overlapping),
+   adjust top to a negative value and remove background. Example:
+   .qr-caption { top: -56px; background: transparent; padding:0; } */
