@@ -1,177 +1,168 @@
 /* style.css — Luxurious dark portfolio (mobile-first)
-   Consolidado e limpo: variáveis, layout, componentes e footer com QR. */
+   Consolidado, comentado, e com redundâncias removidas.
+   Mantive variáveis, responsividade, e blocos de footer consolidados.
+*/
 
 /* --------- Variáveis (ROOT) --------- */
 :root{
-  --bg:#040405;
-  --surface:#0d0d10;
-  --muted:#9aa0a6;
-  --accent:#bfa45a;
-  --soft:#141416;
+  /* cores & surfaces */
+  --bg: #040405;
+  --surface: #0d0d10;
+  --muted: #9aa0a6;
+  --accent: #bfa45a;
+  --soft: #141416;
   --glass: rgba(255,255,255,0.03);
-  --card-radius:16px;
-  --gap:1.25rem;
-  --max-width:1100px;
+
+  /* layout & spacing */
+  --card-radius: 16px;
+  --gap: 1.25rem;
+  --max-width: 1100px;
+
+  /* typography */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
   --font-display: 'Poppins', var(--font-sans);
   --font-alt: 'Montserrat', var(--font-sans);
+
+  /* transitions */
   --transition-fast: .18s;
   --transition-mid: .22s;
 
-  /* QR / footer tuning */
-  --qr-size: 184px; /* controla tamanho visual do QR */
-  --qr-raise-desktop: -18px; /* valor usado como limite no JS */
-  --qr-raise-tablet:  -12px;
-  --qr-raise-mobile:   -8px;
-  --qr-raise-transition: 180ms;
+  /* QR/footer tuning (cap values used by JS) */
+  --qr-size: 184px;              /* visual QR size */
+  --qr-raise-cap-desktop: 40px;  /* max upward shift on desktop (px) */
+  --qr-raise-cap-tablet: 24px;   /* max on tablet */
+  --qr-raise-cap-mobile: 12px;   /* max on mobile */
+  --qr-raise-ease: 180ms;        /* transition duration */
+  --qr-raise-transition: 180ms;  /* legacy var used elsewhere */
 }
 
-/* --------- reset + defaults --------- */
+/* --------- Reset + defaults --------- */
 *,
 *::before,
 *::after { box-sizing: border-box; }
-html,body { height:100%; }
+html, body { height: 100%; }
 html { -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 body{
-  margin:0;
-  font-family:var(--font-sans);
-  background:linear-gradient(180deg,var(--bg),#070708 70%);
-  color:#e6e7e8;
-  line-height:1.45;
-  padding-top:72px;
+  margin: 0;
+  font-family: var(--font-sans);
+  background: linear-gradient(180deg, var(--bg), #070708 70%);
+  color: #e6e7e8;
+  line-height: 1.45;
+  padding-top: 72px; /* space for fixed header */
   transition: background var(--transition-mid) ease;
-  -webkit-text-size-adjust:100%;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* skip link */
+/* skip link (hidden until focused) */
 .skip-link{
-  position:fixed; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;
+  position: fixed; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
 }
 .skip-link:focus{
-  left:1rem; top:1rem; width:auto; height:auto; background:#111; padding:.5rem .75rem;
-  border-radius:6px; color:var(--accent); z-index:9999;
+  left: 1rem; top: 1rem; width: auto; height: auto; background: #111; padding: .5rem .75rem;
+  border-radius: 6px; color: var(--accent); z-index: 9999;
 }
 
-/* layout */
+/* container */
 .container{
-  width:100%;
-  max-width:var(--max-width);
-  margin:0 auto;
-  padding:0 1rem;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-/* header */
+/* --------- Header --------- */
 .site-header{
-  position:fixed;
-  top:0; left:0; right:0;
-  height:72px;
-  display:flex;
-  align-items:center;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex;
+  align-items: center;
   backdrop-filter: blur(6px);
-  background:linear-gradient(180deg, rgba(6,6,8,0.6), rgba(6,6,8,0.45));
-  border-bottom:1px solid rgba(255,255,255,0.02);
-  z-index:50;
+  background: linear-gradient(180deg, rgba(6,6,8,0.6), rgba(6,6,8,0.45));
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  z-index: 50;
 }
-
 .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:var(--gap); width:100%; }
 
 .brand{ display:flex; align-items:center; gap:.75rem; }
 .logo{
-  font-family:var(--font-display); font-weight:700; font-size:1.05rem;
-  padding:.25rem .6rem; border-radius:8px;
-  background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  font-family: var(--font-display); font-weight: 700; font-size: 1.05rem;
+  padding: .25rem .6rem; border-radius: 8px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
   box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-  color:#fff;
+  color: #fff;
 }
-.name{ font-size:.85rem; color:var(--muted); }
+.name{ font-size: .85rem; color: var(--muted); }
 
 /* nav */
 .nav{ display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; }
 .nav a{
-  color:var(--muted); text-decoration:none; font-size:.9rem;
-  padding:.6rem; border-radius:8px; transition: all var(--transition-mid) ease;
+  color: var(--muted); text-decoration: none; font-size: .9rem;
+  padding: .6rem; border-radius: 8px; transition: all var(--transition-mid) ease;
 }
 .nav a:hover, .nav a.active{
-  color:var(--accent); transform:translateY(-2px); outline:0;
+  color: var(--accent); transform: translateY(-2px); outline: 0;
 }
 
-/* CTA */
+/* CTA (Download CV) */
 .btn-cv{
-  background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-  padding:.5rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
-  font-weight:600; color:#fff; text-decoration:none; display:inline-block;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  padding: .5rem .8rem; border-radius: 10px; border:1px solid rgba(255,255,255,0.03);
+  font-weight: 600; color: #fff; text-decoration: none; display:inline-block;
 }
 
-/* mobile menu toggle */
+/* Mobile menu toggle (visible via media query below) */
 .menu-toggle{
-  display:none;
-  background:none;
-  border:0;
-  color:var(--muted);
-  font-size:1.1rem;
-  padding:.5rem;
-  border-radius:8px;
+  display: none;
+  background: none; border: 0; color: var(--muted); font-size: 1.1rem; padding: .5rem; border-radius:8px;
 }
 
-/* hero */
-.hero{ padding:3.2rem 0 1.6rem; position:relative; overflow:visible; }
+/* --------- Hero --------- */
+.hero{ padding: 3.2rem 0 1.6rem; position: relative; overflow: visible; }
 .hero-bg{
   position:absolute; inset:0;
   background-image:
     radial-gradient(circle at 10% 10%, rgba(191,164,90,0.05), transparent 8%),
     radial-gradient(circle at 90% 80%, rgba(255,255,255,0.02), transparent 12%);
-  pointer-events:none; transform:translateZ(0); will-change:transform;
+  pointer-events: none; transform: translateZ(0); will-change: transform;
 }
 .hero-inner{
   position:relative;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  padding:2rem;
-  border-radius:14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  padding: 2rem;
+  border-radius: 14px;
   border:1px solid rgba(255,255,255,0.02);
 }
 
 /* typography */
-.hero h1{ font-family:var(--font-display); font-weight:700; margin:0 0 .5rem; font-size:1.6rem; }
-.lead{ color:var(--muted); margin:0 0 .5rem; }
-.muted{ color:var(--muted); }
+.hero h1{ font-family: var(--font-display); font-weight:700; margin:0 0 .5rem; font-size:1.6rem; }
+.lead{ color: var(--muted); margin:0 0 .5rem; }
+.muted{ color: var(--muted); }
 
-/* cards & sections */
+/* --------- Cards & grid utilities --------- */
 .card-section{ margin:2rem 0; padding:0; }
-.card{
-  background:var(--surface);
-  padding:1.15rem;
-  border-radius:var(--card-radius);
-  border:1px solid rgba(255,255,255,0.02);
-}
+.card{ background: var(--surface); padding:1.15rem; border-radius:var(--card-radius); border:1px solid rgba(255,255,255,0.02); }
 
-/* grid utilities */
 .grid{ display:grid; gap:1rem; }
 .skills-grid{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-top:1rem; }
 
-/* skill cards (glass) */
+/* skill cards */
 .skill-card{
-  background:var(--glass);
-  padding:1rem;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.02);
-  font-weight:600;
-  min-height:64px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background: var(--glass); padding:1rem; border-radius:12px; border:1px solid rgba(255,255,255,0.02);
+  font-weight:600; min-height:64px; display:flex; align-items:center; justify-content:center;
   transition: transform var(--transition-mid) ease, box-shadow var(--transition-mid) ease;
 }
 .skill-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 12px 36px rgba(0,0,0,0.6);
-  border-color:rgba(191,164,90,0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+  border-color: rgba(191,164,90,0.12);
 }
 
 /* timeline */
 .timeline{ display:flex; flex-direction:column; gap:1rem; margin-top:1rem; }
 .timeline-item{
   display:flex; gap:1rem; align-items:flex-start;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
   padding:1rem; border-radius:12px; border:1px solid rgba(255,255,255,0.02);
   transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
 }
@@ -181,432 +172,118 @@ body{
 }
 .timeline-item:focus-within,
 .timeline-item:hover{
-  transform:translateY(-6px); box-shadow:0 18px 50px rgba(0,0,0,0.6);
+  transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,0.6);
 }
 
 /* projects */
 .projects-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1rem; margin-top:1rem; }
 .project-card{
-  background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
   border-radius:12px; border:1px solid rgba(255,255,255,0.02);
   overflow:hidden; display:flex; flex-direction:column;
   transition: transform var(--transition-mid) ease, box-shadow var(--transition-mid) ease;
   outline:0;
 }
 .project-card:hover,
-.project-card:focus{ transform:translateY(-8px); box-shadow:0 26px 80px rgba(0,0,0,0.65); border-color:rgba(191,164,90,0.18); }
-
-.project-media img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  display:block;
-  background:#111;
-  max-width:100%;
-}
-
-/* small screens: slightly smaller project image */
-@media (max-width:480px){
-  .project-media img{ height:160px; }
-}
-
-/* project body */
+.project-card:focus{ transform: translateY(-8px); box-shadow:0 26px 80px rgba(0,0,0,0.65); border-color:rgba(191,164,90,0.18); }
+.project-media img{ width:100%; height:220px; object-fit:cover; display:block; background:#111; max-width:100%; }
+@media (max-width:480px){ .project-media img{ height:160px; } }
 .project-body{ padding:1rem; }
-.project-body h3{ font-family:var(--font-alt); margin-top:0; }
+.project-body h3{ font-family: var(--font-alt); margin-top:0; }
 
 /* education & publications */
-.edu-list{
-  list-style:none;
-  padding:0;
-  margin:1rem 0;
-  display:grid;
-  gap:0.6rem;
-}
-.edu-card{
-  background:var(--glass);
-  padding:0.8rem;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,0.02);
-}
+.edu-list{ list-style:none; padding:0; margin:1rem 0; display:grid; gap:0.6rem; }
+.edu-card{ background:var(--glass); padding:0.8rem; border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
 
-/* SUBLIST PARA AS PÓS-GRADUAÇÕES (estilizada) */
-.edu-sublist{
-  margin-top:0.5rem;
-  padding-left:1.2rem;
-  list-style:disc;
-  opacity:0.95;
-  color:var(--muted);
-}
+/* sublist */
+.edu-sublist{ margin-top:0.5rem; padding-left:1.2rem; list-style:disc; opacity:0.95; color:var(--muted); }
 .edu-sublist li{ margin-bottom:0.25rem; }
-
-/* estilizar marcador (suporte moderno) */
-.edu-sublist li::marker{
-  color:var(--accent);
-  font-weight:600;
-  font-size:.95em;
-}
+.edu-sublist li::marker{ color:var(--accent); font-weight:600; font-size:.95em; }
 
 /* publications grid */
-.pubs-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:1rem;
-  margin-top:1rem;
-}
-.pub-card{
-  padding:1rem;
-  background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,0.02);
-}
+.pubs-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-top:1rem; }
+.pub-card{ padding:1rem; background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent); border-radius:12px; border:1px solid rgba(255,255,255,0.02); }
 
 /* certs */
-.certs-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:.8rem;
-  margin-top:1rem;
-}
-.cert-card{
-  background:var(--glass);
-  padding:.6rem;
-  border-radius:8px;
-  border:1px solid rgba(255,255,255,0.02);
-  text-align:center;
-  font-weight:600;
-}
+.certs-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:.8rem; margin-top:1rem; }
+.cert-card{ background:var(--glass); padding:.6rem; border-radius:8px; border:1px solid rgba(255,255,255,0.02); text-align:center; font-weight:600; }
 
 /* footer base */
-.site-footer{ margin-top:2rem; padding:1.4rem 0; border-top:1px solid rgba(255,255,255,0.02); }
-.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
-
-/* garante que se rolemos para âncoras, o header fixo não as esconda */
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 84px; /* ajustar para a altura do seu header + folga (72px + 12px) */
+.site-footer{ margin-top:2rem; padding:1.6rem 0; border-top:1px solid rgba(255,255,255,0.02); background: transparent; }
+.footer-inner{ display:flex; align-items:stretch; justify-content:space-between; gap:1rem; flex-wrap:nowrap; }
+.footer-left{ display:flex; align-items:center; gap:.6rem; flex:1 1 auto; min-width:0; }
+.footer-right{
+  display:flex; flex-direction:column; align-items:center; gap:.6rem; flex:0 0 auto; justify-content:center; padding-left:1rem;
+  transition: transform var(--qr-raise-ease) ease; will-change: transform; transform: none;
 }
 
-/* focus / accessibility */
+/* QR wrapper & caption */
+.qr-wrapper{ position: relative; display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px; }
+.qr-caption{
+  position: absolute; left:50%; top:-62px; transform: translateX(-50%);
+  width:200px; display:flex; flex-direction:column; align-items:center; gap:4px; pointer-events:none; text-align:center; z-index:6;
+}
+.qr-line{ display:block; font-size:0.86rem; line-height:1.02; color:var(--muted); font-weight:600; width:100%; word-break:break-word; }
+
+/* QR image */
+.qr-image{
+  width: var(--qr-size); height: var(--qr-size); object-fit: contain; border-radius:8px;
+  border:1px solid rgba(255,255,255,0.04); background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  display:block; box-shadow: 0 8px 30px rgba(0,0,0,0.55); margin-top:8px;
+}
+
+/* back to top button */
+.footer-right .back-top{
+  margin-top: 0.75rem; align-self:center; display:inline-block; text-decoration:none; color:var(--muted);
+  font-weight:600; padding:0.48rem 0.85rem; border-radius:10px; transition: all var(--transition-fast) ease;
+  background:transparent; border:1px solid rgba(255,255,255,0.02);
+}
+.footer-right .back-top:hover,
+.footer-right .back-top:focus{
+  color:var(--accent); transform: translateY(-2px); outline:none; border-color: rgba(191,164,90,0.14); background: rgba(255,255,255,0.01);
+}
+.footer-right .back-top:focus{ box-shadow:0 0 0 4px rgba(191,164,90,0.08); border-color: rgba(191,164,90,0.2); }
+
+/* ensure anchor scrolling accounts for fixed header */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px; /* header height + padding */
+}
+
+/* focus styles */
 :focus{ outline-offset:3px; }
 :focus:not(:focus-visible){ outline: none; }
 a:focus, button:focus, .project-card:focus{
-  outline:2px solid rgba(191,164,90,0.16);
-  outline-offset:3px;
-  border-radius:8px;
+  outline:2px solid rgba(191,164,90,0.16); outline-offset:3px; border-radius:8px;
 }
 
-/* prefers reduced motion */
+/* reduced motion */
 @media (prefers-reduced-motion: reduce){
   *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
 }
 
-/* ---------------- Footer & QR consolidated block ---------------- */
-/* This block replaces previous fragmented footer/qr rules. Keep at EOF. */
+/* --------- Responsiveness & footer stacking fallback --------- */
+@media (max-width: 980px){
+  .header-inner { gap: .6rem; }
+  .nav { display: none; } /* hide desktop nav so mobile toggle is used */
+  .menu-toggle { display: inline-flex; }
 
-.site-footer {
-  margin-top: 2rem;
-  padding: 1.6rem 0;
-  border-top: 1px solid rgba(255,255,255,0.02);
-  background: transparent;
-}
-
-/* force nowrap on large viewports; JS will detect column layout and skip adjustments */
-.footer-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: nowrap;
-}
-
-.footer-left {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .6rem;
-  flex: 0 0 auto;
-  justify-content: center;
-  padding-left: 1rem;
-
-  /* no transform here — JS applies precise inline transform */
-  transition: transform var(--qr-raise-transition) ease;
-  will-change: transform;
-}
-
-/* QR wrapper: context for caption (absolute) */
-.qr-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding-top: 8px;
-}
-
-/* caption positioned above QR (three lines) */
-.qr-caption {
-  position: absolute;
-  left: 50%;
-  top: -62px;
-  transform: translateX(-50%);
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  pointer-events: none;
-  text-align: center;
-  z-index: 6;
-  background: transparent;
-  padding: 0;
-}
-
-/* individual lines */
-.qr-line {
-  display: block;
-  font-size: 0.86rem;
-  line-height: 1.02;
-  color: var(--muted);
-  font-weight: 600;
-  width: 100%;
-  word-break: break-word;
-}
-
-/* QR image */
-.qr-image {
-  width: var(--qr-size);
-  height: var(--qr-size);
-  object-fit: contain;
-  border-radius: 8px;
-  border: 1px solid rgba(255,255,255,0.04);
-  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
-  display: block;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.55);
-  margin-top: 8px;
-}
-
-/* back to top button styling (centered beneath QR) */
-.footer-right .back-top {
-  margin-top: 0.75rem;
-  align-self: center;
-  display: inline-block;
-  text-decoration: none;
-  color: var(--muted);
-  font-weight: 600;
-  padding: 0.48rem 0.85rem;
-  border-radius: 10px;
-  transition: all var(--transition-fast) ease;
-  background: transparent;
-  border: 1px solid rgba(255,255,255,0.02);
-}
-.footer-right .back-top:hover,
-.footer-right .back-top:focus {
-  color: var(--accent);
-  transform: translateY(-2px);
-  outline: none;
-  border-color: rgba(191,164,90,0.14);
-  background: rgba(255,255,255,0.01);
-}
-.footer-right .back-top:focus {
-  box-shadow: 0 0 0 4px rgba(191,164,90,0.08);
-  border-color: rgba(191,164,90,0.2);
-}
-
-/* responsiveness */
-@media (max-width: 980px) {
-  .footer-inner {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    text-align: center;
-  }
-  .footer-left { order: 1; width: 100%; justify-content: center; padding: 0 .6rem; }
-  .footer-right { order: 2; width: 100%; padding: 0 .6rem; }
-  /* JS will use --qr-raise-tablet as limit; CSS intentionally avoids forcing transform here */
-}
-
-@media (max-width: 720px) {
-  .qr-caption {
-    top: -56px;
-    width: 72vw;
-    max-width: 260px;
-    padding: 0 8px;
-  }
-  .qr-line { font-size: 0.95rem; }
-  .qr-image { width: 36vw; max-width: var(--qr-size); height: auto; }
-}
-
-/* optional hover nudge (kept small and purely visual) */
-.footer-right:hover {
-  /* small nudge only on large screens — JS inline transform may combine with this */
-  transform: translateY(-2px);
-}
-
-/* end of file */
-
-/* ---------- PATCH: elevar apenas os 3 itens do rodapé (legenda + QR + botão) ---------- */
-/* Colar AO FINAL do css/style.css */
-
-/* configuração de controle — ajuste os caps conforme desejar */
-:root{
-  --qr-raise-cap-desktop: 28px; /* máximo que o bloco pode subir (px) */
-  --qr-raise-cap-tablet: 18px;
-  --qr-raise-cap-mobile: 10px;
-  --qr-raise-ease: 180ms;
-}
-
-/* aplicamos a transição ao bloco certo; transform será escrito pelo JS */
-.footer-right {
-  transition: transform var(--qr-raise-ease) ease;
-  will-change: transform;
-}
-
-/* caso queira estilo extra para o botão quando deslocado (opcional) */
-.footer-right .back-top {
-  transition: background var(--qr-raise-ease) ease, transform var(--qr-raise-ease) ease;
-}
-
-/* garantir que quando o footer empilhar não haja deslocamento visual indesejado */
-@media (max-width: 980px) {
-  .footer-right { transform: none !important; } /* desativa movimentos em telas médias/pequenas */
-}
-
-/* acessibilidade: se o usuário prefere reduzir movimento, removemos transições via media query */
-@media (prefers-reduced-motion: reduce) {
-  .footer-right, .footer-right .back-top { transition: none !important; }
-}
-/* ---------- fim do patch ---------- */
-
-
-/* ---------- FOOTER ALIGN PATCH (COLOCAR AO FINAL DO ARQUIVO) ----------
-   Mantém responsividade e acessibilidade. Remove transforms conflitantes.
------------------------------------------------------------------------*/
-
-/* Valores de controle — edite se quiser ajustar quanto sobe */
-:root{
-  --qr-size: 184px;               /* tamanho visual do QR */
-  --qr-raise-cap-desktop: 40px;   /* máximo que pode subir no desktop (px) */
-  --qr-raise-cap-tablet:  24px;   /* máximo em tablet */
-  --qr-raise-cap-mobile:  12px;   /* máximo em mobile (normalmente pouco) */
-  --qr-raise-ease: 180ms;         /* velocidade da transição */
-}
-
-/* Garante que .footer-right não tenha transform "padrão" conflituoso */
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: .6rem;
-  flex: 0 0 auto;
-  justify-content: center;
-  padding-left: 1rem;
-
-  /* transição suave; transform será aplicado inline pelo JS */
-  transition: transform var(--qr-raise-ease) ease;
-  will-change: transform;
-  transform: none; /* estado inicial claro */
-  -webkit-transform: none;
-}
-
-/* remove hover que poderia conflitar (sem perda visual) */
-.footer-right:hover { transform: none; }
-
-/* QR wrapper/caption (mantém comportamento já existente) */
-.qr-wrapper { position: relative; display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px; vertical-align:middle; }
-.qr-caption {
-  position: absolute;
-  left: 50%;
-  top: -62px;
-  transform: translateX(-50%);
-  width: 200px;
-  display:flex; flex-direction:column; align-items:center; gap:4px;
-  pointer-events: none;
-  text-align:center;
-  z-index:6;
-  background: transparent;
-  padding:0;
-}
-.qr-line { display:block; font-size:0.86rem; line-height:1.02; color:var(--muted); font-weight:600; width:100%; word-break:break-word; }
-
-.qr-image { width: var(--qr-size); height: var(--qr-size); object-fit:contain; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent); box-shadow:0 8px 30px rgba(0,0,0,0.55); margin-top:8px; }
-
-/* botão abaixo do QR */
-.footer-right .back-top {
-  margin-top:0.75rem;
-  align-self:center;
-  display:inline-block;
-  text-decoration:none;
-  color:var(--muted);
-  font-weight:600;
-  padding:0.48rem 0.85rem;
-  border-radius:10px;
-  transition: all var(--qr-raise-ease) ease;
-  background:transparent;
-  border:1px solid rgba(255,255,255,0.02);
-}
-.footer-right .back-top:hover,
-.footer-right .back-top:focus {
-  color:var(--accent);
-  transform: translateY(-2px);
-  outline:none;
-  border-color: rgba(191,164,90,0.14);
-  background: rgba(255,255,255,0.01);
-}
-
-/* Responsividade: se o footer empilhar (coluna), vamos DESLIGAR o ajuste JS
-   para evitar sobreposição. Mantemos aparência. */
-@media (max-width: 980px) {
   .footer-inner { flex-direction: column; align-items:center; gap:1rem; text-align:center; }
-  .footer-left { order:1; width:100%; justify-content:center; padding:0 .6rem; }
-  .footer-right { order:2; width:100%; padding:0 .6rem; transform:none !important; }
+  .footer-left { order: 1; width: 100%; justify-content: center; padding: 0 .6rem; }
+  .footer-right { order: 2; width: 100%; padding: 0 .6rem; transform: none !important; }
 }
 
-/* Ajustes móveis para legenda/QR */
-@media (max-width:720px){
-  .qr-caption { top: -56px; width: 72vw; max-width:260px; padding:0 8px; }
+/* small devices adjustments */
+@media (max-width: 720px){
+  .qr-caption { top:-56px; width:72vw; max-width:260px; padding:0 8px; }
   .qr-line { font-size:0.95rem; }
   .qr-image { width:36vw; max-width:var(--qr-size); height:auto; }
+  .project-media img { height: 160px; }
 }
 
-/* reduz movimento para usuários que pedem 'reduced-motion' */
-@media (prefers-reduced-motion: reduce) {
-  .footer-right, .footer-right .back-top { transition: none !important; }
+/* final note: ensure .footer-right transform is disabled on stacked layout */
+@media (max-width: 980px){
+  .footer-right { transform: none !important; }
 }
 
-/* ---------- Alinhamento vertical robusto: igualar alturas (footer) ----------
-   Cole AO FINAL do css/style.css
--------------------------------------------------------------------------- */
-
-.footer-inner { align-items: stretch; } /* permite que as colunas tenham alturas comparáveis */
-
-.footer-left { /* mantém comportamento, mas permite altura natural */
-  display: flex;
-  align-items: center;
-}
-
-/* Garante que o lado direito seja um flex-column e que seu conteúdo
-   possa ser centralizado verticalmente quando receber altura via JS. */
-.footer-right {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* centra verticalmente o trio (legend + QR + botão) */
-  gap: .6rem;
-  padding-left: 1rem;
-  box-sizing: border-box;
-  min-height: 0; /* importante para que a altura definida em JS funcione */
-}
-
-/* Em dispositivos pequenos (quando o footer empilha), tudo volta ao normal */
-@media (max-width: 980px) {
-  .footer-inner { align-items: center; flex-direction: column; }
-  .footer-right { height: auto !important; justify-content: flex-start; }
-}
+/* ---------- END OF FILE ---------- */
