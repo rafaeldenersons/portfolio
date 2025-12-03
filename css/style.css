@@ -580,3 +580,33 @@ a:focus, button:focus, .project-card:focus{
 @media (prefers-reduced-motion: reduce) {
   .footer-right, .footer-right .back-top { transition: none !important; }
 }
+
+/* ---------- Alinhamento vertical robusto: igualar alturas (footer) ----------
+   Cole AO FINAL do css/style.css
+-------------------------------------------------------------------------- */
+
+.footer-inner { align-items: stretch; } /* permite que as colunas tenham alturas comparáveis */
+
+.footer-left { /* mantém comportamento, mas permite altura natural */
+  display: flex;
+  align-items: center;
+}
+
+/* Garante que o lado direito seja um flex-column e que seu conteúdo
+   possa ser centralizado verticalmente quando receber altura via JS. */
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* centra verticalmente o trio (legend + QR + botão) */
+  gap: .6rem;
+  padding-left: 1rem;
+  box-sizing: border-box;
+  min-height: 0; /* importante para que a altura definida em JS funcione */
+}
+
+/* Em dispositivos pequenos (quando o footer empilha), tudo volta ao normal */
+@media (max-width: 980px) {
+  .footer-inner { align-items: center; flex-direction: column; }
+  .footer-right { height: auto !important; justify-content: flex-start; }
+}
