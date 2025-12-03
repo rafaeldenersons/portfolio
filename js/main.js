@@ -1,85 +1,20 @@
-// main.js — interações leves and accessibility improvements
-document.addEventListener('DOMContentLoaded', function(){
-  const menuToggle = document.getElementById('menuToggle');
-  const nav = document.querySelector('.nav');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if(menuToggle){
-    menuToggle.addEventListener('click', ()=>{
-      const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', String(!expanded));
-      if(mobileMenu){
-        if(expanded){
-          mobileMenu.hidden = true;
-        } else {
-          mobileMenu.hidden = false;
-        }
-      } else {
-        nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
-      }
-    });
-  }
+// main.js — interações leves, acessibilidade e ajuste dinâmico do footer (QR + botão)
+/* global document, window, history, getComputedStyle */
 
-  // highlight nav item on scroll
-  const sections = Array.from(document.querySelectorAll('main section'));
-  const navLinks = Array.from(document.querySelectorAll('.nav a'));
-  const getOffset = el => el.getBoundingClientRect().top + window.scrollY;
-  const changeActive = ()=>{
-    const scrollPos = window.scrollY + 140;
-    let currentIndex = 0;
-    for(let i=0;i<sections.length;i++){
-      if(getOffset(sections[i]) <= scrollPos) currentIndex = i;
-    }
-    navLinks.forEach(a=>a.classList.remove('active'));
-    if(navLinks[currentIndex]) navLinks[currentIndex].classList.add('active');
-  };
-  changeActive();
-  window.addEventListener('scroll', changeActive, {passive:true});
+document.addEventListener('DOMContentLoaded', function () {
 
-  // parallax subtle effect for hero background
-  const heroBg = document.querySelector('.hero-bg');
-  if(heroBg){
-    window.addEventListener('scroll', ()=>{
-      const sc = window.scrollY * 0.15;
-      heroBg.style.transform = `translateY(${sc}px)`;
-    }, {passive:true});
-  }
-
-  // keyboard: skip to content via "s"
-  document.addEventListener('keydown',(e)=>{
-    if(e.key === 's' || e.key === 'S'){ document.querySelector('main').scrollIntoView({behavior:'smooth'}); }
-  });
-
-  // close mobile menu after click
-  if(mobileMenu){
-    mobileMenu.querySelectorAll('a').forEach(a=>{
-      a.addEventListener('click', ()=>{ mobileMenu.hidden = true; menuToggle.setAttribute('aria-expanded','false'); });
-    });
-  }
-    if(mobileMenu){
-    mobileMenu.querySelectorAll('a').forEach(a=>{
-      a.addEventListener('click', ()=>{ 
-        mobileMenu.hidden = true; 
-        menuToggle.setAttribute('aria-expanded','false'); 
-      });
-    });
-  }
-
-  /* -----------------------------------------------------------
-     Smooth Back-to-top + Ajuste de âncoras com header fixo
-     ----------------------------------------------------------- */
-
-  // Back-to-top smooth (versão com ajuste de hash opcional)
-// main.js — interações leves and accessibility improvements
-document.addEventListener('DOMContentLoaded', function(){
+  /* --------------------------
+     Menu / mobile toggle
+     -------------------------- */
   const menuToggle = document.getElementById('menuToggle');
   const nav = document.querySelector('.nav');
   const mobileMenu = document.getElementById('mobileMenu');
 
-  if(menuToggle){
-    menuToggle.addEventListener('click', ()=>{
+  if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
       const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
       menuToggle.setAttribute('aria-expanded', String(!expanded));
-      if(mobileMenu){
+      if (mobileMenu) {
         mobileMenu.hidden = expanded; // toggle
       } else if (nav) {
         nav.style.display = nav.style.display === 'flex' ? 'none' : 'flex';
@@ -87,70 +22,67 @@ document.addEventListener('DOMContentLoaded', function(){
     });
   }
 
-  // highlight nav item on scroll
-  const sections = Array.from(document.querySelectorAll('main section'));
-  const navLinks = Array.from(document.querySelectorAll('.nav a'));
-  const getOffset = el => el.getBoundingClientRect().top + window.scrollY;
-  const changeActive = ()=>{
-    const scrollPos = window.scrollY + 140;
-    let currentIndex = 0;
-    for(let i=0;i<sections.length;i++){
-      if(getOffset(sections[i]) <= scrollPos) currentIndex = i;
-    }
-    navLinks.forEach(a=>a.classList.remove('active'));
-    if(navLinks[currentIndex]) navLinks[currentIndex].classList.add('active');
-  };
-  changeActive();
-  window.addEventListener('scroll', changeActive, {passive:true});
-
-  // parallax subtle effect for hero background
-  const heroBg = document.querySelector('.hero-bg');
-  if(heroBg){
-    window.addEventListener('scroll', ()=>{
-      const sc = window.scrollY * 0.15;
-      heroBg.style.transform = `translateY(${sc}px)`;
-    }, {passive:true});
-  }
-
-  // keyboard: skip to content via "s"
-  document.addEventListener('keydown',(e)=>{
-    if(e.key === 's' || e.key === 'S'){
-      const main = document.querySelector('main');
-      if(main) main.scrollIntoView({behavior:'smooth'});
-    }
-  });
-
-  // close mobile menu after click (single handler; removed duplicate)
-  if(mobileMenu && menuToggle){
-    mobileMenu.querySelectorAll('a').forEach(a=>{
-      a.addEventListener('click', ()=>{
+  // close mobile menu after click (single handler)
+  if (mobileMenu && menuToggle) {
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
         mobileMenu.hidden = true;
-        menuToggle.setAttribute('aria-expanded','false');
+        menuToggle.setAttribute('aria-expanded', 'false');
       });
     });
   }
 
+  /* --------------------------
+     Highlight current nav item on scroll
+     -------------------------- */
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const navLinks = Array.from(document.querySelectorAll('.nav a'));
+  const getOffset = el => el.getBoundingClientRect().top + window.scrollY;
+  const changeActive = () => {
+    const scrollPos = window.scrollY + 140;
+    let currentIndex = 0;
+    for (let i = 0; i < sections.length; i++) {
+      if (getOffset(sections[i]) <= scrollPos) currentIndex = i;
+    }
+    navLinks.forEach(a => a.classList.remove('active'));
+    if (navLinks[currentIndex]) navLinks[currentIndex].classList.add('active');
+  };
+  changeActive();
+  window.addEventListener('scroll', changeActive, { passive: true });
+
+  /* --------------------------
+     Parallax subtle effect for hero background
+     -------------------------- */
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      const sc = window.scrollY * 0.15;
+      heroBg.style.transform = `translateY(${sc}px)`;
+    }, { passive: true });
+  }
+
+  /* --------------------------
+     Keyboard: skip to content via "s"
+     -------------------------- */
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 's' || e.key === 'S') {
+      const main = document.querySelector('main');
+      if (main) main.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
   /* -----------------------------------------------------------
      Smooth Back-to-top + Ajuste de âncoras com header fixo
      ----------------------------------------------------------- */
-
-  // Improved Back-to-top: smooth + focus accessibility + history update
   const backTop = document.getElementById('backTop');
   const topAnchor = document.getElementById('top');
   if (backTop && topAnchor) {
     backTop.addEventListener('click', function (e) {
       e.preventDefault();
-      // use scrollIntoView for consistent focusing
       topAnchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // update history to reflect the anchor (optional)
-      try {
-        history.replaceState(null, '', '#top');
-      } catch (err) { /* silent */ }
-
-      // move focus for keyboard users and screen readers
-      topAnchor.setAttribute('tabindex', '-1');           // make focusable if not
-      topAnchor.focus({ preventScroll: true });           // focus without jump
+      try { history.replaceState(null, '', '#top'); } catch (err) { /* silent */ }
+      topAnchor.setAttribute('tabindex', '-1');
+      topAnchor.focus({ preventScroll: true });
       setTimeout(function () { topAnchor.removeAttribute('tabindex'); }, 1000);
     });
   }
@@ -169,33 +101,81 @@ document.addEventListener('DOMContentLoaded', function(){
         const offsetPosition = elementPosition - headerOffset;
 
         window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        try {
-          history.pushState(null, '', href);
-        } catch (err) { /* silent */ }
+        try { history.pushState(null, '', href); } catch (err) { /* silent */ }
       }
     });
   });
 
-});
+  /* -----------------------------------------------------------
+     Ajuste dinâmico do footer (move .footer-right verticalmente)
+     para alinhar o centro do botão "Voltar ao topo" com o centro
+     vertical de .footer-left (RDRS + copyright).
+     ----------------------------------------------------------- */
 
+  function alignFooterRightToLeft() {
+    const footerInner = document.querySelector('.footer-inner');
+    if (!footerInner) return;
 
-  // scroll suave com compensação da altura do header fixo
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', function (ev) {
-      const href = a.getAttribute('href');
-      if (!href || href === '#' || href === '#!') return;
+    const left = footerInner.querySelector('.footer-left');
+    const right = footerInner.querySelector('.footer-right');
+    const backBtn = right ? right.querySelector('.back-top') : null;
+    if (!left || !right || !backBtn) return;
 
-      const target = document.querySelector(href);
-      if (target) {
-        ev.preventDefault();
-        const headerOffset = 72 + 12; // altura do header + folga
-        const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
-        const offsetPosition = elementPosition - headerOffset;
+    // Se o footer está em layout de coluna (mobile), não aplicamos deslocamento
+    const footerInnerStyle = getComputedStyle(footerInner);
+    if (footerInnerStyle.flexDirection === 'column') {
+      right.style.transform = 'none';
+      return;
+    }
 
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-        history.pushState(null, '', href);
-      }
-    });
-  });
+    // Limpa transform antes de medir para evitar base contaminada
+    right.style.transform = 'none';
+
+    // Garante que layout/medidas já estabilizaram
+    // (chamaremos essa função novamente no load e resize)
+    const leftRect = left.getBoundingClientRect();
+    const backRect = backBtn.getBoundingClientRect();
+
+    // Centros verticais (relativos ao viewport)
+    const leftCenterY = leftRect.top + leftRect.height / 2;
+    const backCenterY = backRect.top + backRect.height / 2;
+
+    // Delta: >0 se back está abaixo do left (queremos subir right)
+    let delta = backCenterY - leftCenterY;
+
+    // Cap the delta using CSS variables (absolute values)
+    const rootStyle = getComputedStyle(document.documentElement);
+    const capDesktop = Math.abs(parseFloat(rootStyle.getPropertyValue('--qr-raise-desktop')) || 18);
+    const capTablet = Math.abs(parseFloat(rootStyle.getPropertyValue('--qr-raise-tablet')) || 12);
+    const capMobile = Math.abs(parseFloat(rootStyle.getPropertyValue('--qr-raise-mobile')) || 8);
+
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    let maxCap = capDesktop;
+    if (vw <= 720) maxCap = capMobile;
+    else if (vw <= 980) maxCap = capTablet;
+
+    // Limit the delta so we don't move excessively (keeps layout safe)
+    if (delta > maxCap) delta = maxCap;
+    if (delta < -maxCap) delta = -maxCap;
+
+    // translateY wants negative value to move the right block upwards when delta positive
+    const translateY = -delta;
+
+    // apply rounded transform
+    right.style.transform = `translateY(${Math.round(translateY)}px)`;
+  }
+
+  // Run alignment after short delays (for fonts/images)
+  setTimeout(alignFooterRightToLeft, 120);
+  window.addEventListener('load', () => setTimeout(alignFooterRightToLeft, 150));
+
+  // Recompute on resize / orientationchange with debounce
+  let resizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(alignFooterRightToLeft, 120);
+  }, { passive: true });
+
+  window.addEventListener('orientationchange', () => setTimeout(alignFooterRightToLeft, 200));
 
 });
