@@ -196,7 +196,7 @@ body{
 .edu-card{ background:var(--glass); padding:0.8rem; border-radius:10px; border:1px solid rgba(255,255,255,0.02); }
 
 /* sublist */
-.edu-sublist{ margin-top:0.5rem; padding-left:1.2rem; list-style:disc; opacity:0.95; color:var(--muted); }
+.edu-sublist{ margin-top:0.5rem; padding-left:1.2rem; list-style:disc; opacity:0.95; color:var(--accent); }
 .edu-sublist li{ margin-bottom:0.25rem; }
 .edu-sublist li::marker{ color:var(--accent); font-weight:600; font-size:.95em; }
 
