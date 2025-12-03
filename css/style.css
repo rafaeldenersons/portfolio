@@ -453,3 +453,86 @@ a:focus, button:focus, .project-card:focus{
 /* optional: when you prefer the caption entirely above (not overlapping),
    adjust top to a negative value and remove background. Example:
    .qr-caption { top: -56px; background: transparent; padding:0; } */
+
+/* ---------- Ajustes finos: legenda acima do QR + botão centralizado ---------- */
+
+/* referência para posicionamento absoluto da legenda */
+.qr-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding-top: 8px; /* mantém espaçamento interno se necessário */
+}
+
+/* legenda posicionada MAIS ACIMA (sem sobrepor o QR) */
+.qr-caption {
+  position: absolute;
+  left: 50%;
+  top: -62px;              /* <<-- ajuste principal: controla distância acima da imagem */
+  transform: translateX(-50%);
+  width: 200px;            /* largura compatível com QR (ajuste se quiser) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;    /* não bloqueia cliques no QR */
+  text-align: center;
+  z-index: 5;
+  background: transparent; /* sem fundo para não bloquear/escurecer o QR */
+  padding: 0;              /* legenda limpa, sem caixa por default */
+}
+
+/* linhas da legenda (3 linhas) */
+.qr-line {
+  display: block;
+  font-size: 0.86rem;
+  line-height: 1.02;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0;
+  width: 100%;
+}
+
+/* QR imagem mantém destaque */
+.qr-image {
+  width: 184px;
+  height: 184px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+  display: block;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.55);
+  margin-top: 8px;
+}
+
+/* Botão centralizado horizontalmente com relação à figura do QR.
+   Mantemos a posição abaixo da imagem (vertical inalterada), mas agora
+   ele fica exatamente no centro horizontal do QR. */
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* garante centralização horizontal do conteúdo (QR + botão) */
+  gap: .6rem;
+  flex: 0 0 auto;
+  justify-content: center;
+  padding-left: 1rem;
+}
+
+/* botao voltar: largura auto, centralizado pela regra acima */
+.footer-right .back-top {
+  margin-top: 0.75rem;
+  align-self: center;
+}
+
+/* MOBILE: adaptações */
+@media (max-width: 720px) {
+  .qr-caption {
+    top: -56px;         /* menos deslocamento em telas pequenas */
+    width: 72vw;
+    max-width: 260px;
+  }
+  .qr-line { font-size: 0.95rem; }
+  .qr-imag
