@@ -1,5 +1,6 @@
-/* style__.css — Luxurious dark portfolio (mobile-first)
-   Revisado: comentários, variáveis e pequenos ajustes para o comportamento do footer (QR + botão)
+/* style.css — Luxurious dark portfolio (mobile-first)
+   Consolidado, comentado, e com redundâncias removidas.
+   Mantive variáveis, responsividade, e blocos de footer consolidados.
 */
 
 /* --------- Variáveis (ROOT) --------- */
@@ -28,8 +29,8 @@
 
   /* QR/footer tuning (cap values used by JS) */
   --qr-size: 184px;              /* visual QR size */
-  --qr-raise-cap-desktop: 48px;  /* max upward shift on desktop (px) — levemente aumentado para flexibilidade */
-  --qr-raise-cap-tablet: 28px;   /* max on tablet */
+  --qr-raise-cap-desktop: 40px;  /* max upward shift on desktop (px) */
+  --qr-raise-cap-tablet: 24px;   /* max on tablet */
   --qr-raise-cap-mobile: 12px;   /* max on mobile */
   --qr-raise-ease: 180ms;        /* transition duration */
   --qr-raise-transition: 180ms;  /* legacy var used elsewhere */
@@ -209,12 +210,11 @@ body{
 
 /* footer base */
 .site-footer{ margin-top:2rem; padding:1.6rem 0; border-top:1px solid rgba(255,255,255,0.02); background: transparent; }
-.footer-inner{ display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:nowrap; }
+.footer-inner{ display:flex; align-items:stretch; justify-content:space-between; gap:1rem; flex-wrap:nowrap; }
 .footer-left{ display:flex; align-items:center; gap:.6rem; flex:1 1 auto; min-width:0; }
 .footer-right{
   display:flex; flex-direction:column; align-items:center; gap:.6rem; flex:0 0 auto; justify-content:center; padding-left:1rem;
   transition: transform var(--qr-raise-ease) ease; will-change: transform; transform: none;
-  transform-origin: center top; /* facilita animação para cima */
 }
 
 /* QR wrapper & caption */
@@ -286,17 +286,35 @@ a:focus, button:focus, .project-card:focus{
   .footer-right { transform: none !important; }
 }
 
-/* --------- BOLINHAS INLINE (HERO) --------- */
+/* --------- Estilo para listas (bullet points) --------- */
+
+/* Estilo para as bolinhas (marcadores) nas sublistas de educação */
+.edu-sublist li::marker {
+  color: var(--accent); /* Cor amarela definida na variável de cor --accent */
+  font-weight: 600;      /* Peso da fonte mais forte para as bolinhas */
+  font-size: 1rem;       /* Tamanho de fonte das bolinhas */
+}
+
+/* Estilo para as bolinhas de qualquer lista não ordenada (ul) no site */
+ul li::marker {
+  color: var(--accent); /* Cor amarela definida na variável de cor --accent */
+  font-weight: 600;      /* Peso da fonte mais forte para as bolinhas */
+}
+
+/* --------- BOLINHAS INLINE (HERO) ---------
+   Apenas pinta as bolinhas inseridas via <span class="bullet">•</span>
+   Mantém todo o comportamento inline (não quebra linhas).
+   ----------------------------------------------------------- */
 .hero .bullet {
   color: var(--accent);
   font-weight: 700;
+  /* espaço visual entre bullet e texto; pequeno ajuste para alinhamento */
   padding: 0 6px 0 6px;
   display: inline;
   line-height: 1;
 }
 
-/* Estilo para listas (marker colors) */
-.edu-sublist li::marker { color: var(--accent); font-weight: 600; font-size: 1rem; }
-ul li::marker { color: var(--accent); font-weight: 600; }
+/* --------- Final da estilização das listas --------- */
+
 
 /* ---------- END OF FILE ---------- */
