@@ -179,3 +179,82 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('orientationchange', () => setTimeout(alignFooterRightToLeft, 200));
 
 });
+
+/* ---------- PATCH JS: alinhar apenas os 3 itens do rodapé (legenda + QR + botão) ---------- */
+/* Colar AO FINAL do js/main.js */
+
+(function(){
+  // debounce util
+  function debounce(fn, wait){ let t; return function(){ clearTimeout(t); t = setTimeout(fn, wait); }; }
+
+  function shouldDisableAdjust(footerInner){
+    if(!footerInner) return true;
+    const style = getComputedStyle(footerInner);
+    // quando o footer empilhar (flex-direction: column) desativamos
+    return style.flexDirection === 'column';
+  }
+
+  function alignFooterThreeItems(){
+    const footerInner = document.querySelector('.footer-inner');
+    if(!footerInner) return;
+    const left = footerInner.querySelector('.footer-left');
+    const right = footerInner.querySelector('.footer-right');
+    if(!left || !right) return;
+
+    // preferimos não atuar se o layout empilha (mobile)
+    if(shouldDisableAdjust(footerInner)){
+      right.style.transform = 'none';
+      return;
+    }
+
+    const backBtn = right.querySelector('.back-top');
+    if(!backBtn) return;
+
+    // reset para medições precisas
+    right.style.transform = 'none';
+
+    const leftRect = left.getBoundingClientRect();
+    const backRect = backBtn.getBoundingClientRect();
+
+    // centro vertical de cada um
+    const leftCenterY = leftRect.top + leftRect.height / 2;
+    const backCenterY = backRect.top + backRect.height / 2;
+
+    // desejamos que backCenterY se aproxime de leftCenterY
+    let delta = backCenterY - leftCenterY; // >0 se back está abaixo de left
+    // se delta positivo => precisamos subir (translateY negativo)
+
+    // caps: obter dos CSS (ou fallback)
+    const root = getComputedStyle(document.documentElement);
+    const capDesktop = Math.abs(parseFloat(root.getPropertyValue('--qr-raise-cap-desktop')) || 28);
+    const capTablet  = Math.abs(parseFloat(root.getPropertyValue('--qr-raise-cap-tablet'))  || 18);
+    const capMobile  = Math.abs(parseFloat(root.getPropertyValue('--qr-raise-cap-mobile'))  || 10);
+
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    let cap = capDesktop;
+    if(vw <= 720) cap = capMobile;
+    else if(vw <= 980) cap = capTablet;
+
+    // limitar o delta (evita movimentos exagerados)
+    if(delta > cap) delta = cap;
+    if(delta < -cap) delta = -cap;
+
+    // traduzir: subir => translateY negativo
+    const translateY = -Math.round(delta);
+
+    // aplicar transform animado
+    right.style.transform = `translateY(${translateY}px)`;
+  }
+
+  // inicial e nos eventos relevantes
+  document.addEventListener('DOMContentLoaded', function(){
+    // aguardar um pequeno tempo para imagens e fontes carregarem
+    setTimeout(alignFooterThreeItems, 160);
+  });
+
+  window.addEventListener('load', function(){ setTimeout(alignFooterThreeItems, 180); });
+  window.addEventListener('resize', debounce(alignFooterThreeItems, 100));
+  window.addEventListener('orientationchange', function(){ setTimeout(alignFooterThreeItems, 200); });
+
+})();
+/* ---------- fim do patch JS ---------- */
