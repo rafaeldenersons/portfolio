@@ -484,3 +484,99 @@ a:focus, button:focus, .project-card:focus{
   .footer-right, .footer-right .back-top { transition: none !important; }
 }
 /* ---------- fim do patch ---------- */
+
+
+/* ---------- FOOTER ALIGN PATCH (COLOCAR AO FINAL DO ARQUIVO) ----------
+   Mantém responsividade e acessibilidade. Remove transforms conflitantes.
+-----------------------------------------------------------------------*/
+
+/* Valores de controle — edite se quiser ajustar quanto sobe */
+:root{
+  --qr-size: 184px;               /* tamanho visual do QR */
+  --qr-raise-cap-desktop: 40px;   /* máximo que pode subir no desktop (px) */
+  --qr-raise-cap-tablet:  24px;   /* máximo em tablet */
+  --qr-raise-cap-mobile:  12px;   /* máximo em mobile (normalmente pouco) */
+  --qr-raise-ease: 180ms;         /* velocidade da transição */
+}
+
+/* Garante que .footer-right não tenha transform "padrão" conflituoso */
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .6rem;
+  flex: 0 0 auto;
+  justify-content: center;
+  padding-left: 1rem;
+
+  /* transição suave; transform será aplicado inline pelo JS */
+  transition: transform var(--qr-raise-ease) ease;
+  will-change: transform;
+  transform: none; /* estado inicial claro */
+  -webkit-transform: none;
+}
+
+/* remove hover que poderia conflitar (sem perda visual) */
+.footer-right:hover { transform: none; }
+
+/* QR wrapper/caption (mantém comportamento já existente) */
+.qr-wrapper { position: relative; display:flex; flex-direction:column; align-items:center; margin:0; padding-top:8px; vertical-align:middle; }
+.qr-caption {
+  position: absolute;
+  left: 50%;
+  top: -62px;
+  transform: translateX(-50%);
+  width: 200px;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  pointer-events: none;
+  text-align:center;
+  z-index:6;
+  background: transparent;
+  padding:0;
+}
+.qr-line { display:block; font-size:0.86rem; line-height:1.02; color:var(--muted); font-weight:600; width:100%; word-break:break-word; }
+
+.qr-image { width: var(--qr-size); height: var(--qr-size); object-fit:contain; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent); box-shadow:0 8px 30px rgba(0,0,0,0.55); margin-top:8px; }
+
+/* botão abaixo do QR */
+.footer-right .back-top {
+  margin-top:0.75rem;
+  align-self:center;
+  display:inline-block;
+  text-decoration:none;
+  color:var(--muted);
+  font-weight:600;
+  padding:0.48rem 0.85rem;
+  border-radius:10px;
+  transition: all var(--qr-raise-ease) ease;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.02);
+}
+.footer-right .back-top:hover,
+.footer-right .back-top:focus {
+  color:var(--accent);
+  transform: translateY(-2px);
+  outline:none;
+  border-color: rgba(191,164,90,0.14);
+  background: rgba(255,255,255,0.01);
+}
+
+/* Responsividade: se o footer empilhar (coluna), vamos DESLIGAR o ajuste JS
+   para evitar sobreposição. Mantemos aparência. */
+@media (max-width: 980px) {
+  .footer-inner { flex-direction: column; align-items:center; gap:1rem; text-align:center; }
+  .footer-left { order:1; width:100%; justify-content:center; padding:0 .6rem; }
+  .footer-right { order:2; width:100%; padding:0 .6rem; transform:none !important; }
+}
+
+/* Ajustes móveis para legenda/QR */
+@media (max-width:720px){
+  .qr-caption { top: -56px; width: 72vw; max-width:260px; padding:0 8px; }
+  .qr-line { font-size:0.95rem; }
+  .qr-image { width:36vw; max-width:var(--qr-size); height:auto; }
+}
+
+/* reduz movimento para usuários que pedem 'reduced-motion' */
+@media (prefers-reduced-motion: reduce) {
+  .footer-right, .footer-right .back-top { transition: none !important; }
+}
