@@ -354,17 +354,20 @@
 
 <footer class="site-footer" id="footer" role="contentinfo">
   <div class="container footer-inner">
-    <!-- esquerda: logo + copyright -->
+    <!-- esquerda -->
     <div class="footer-left">
       <div class="logo small">RDRS</div>
       <div class="copy">© Rafael Denerson Ramos de Sousa — Todos os direitos reservados</div>
     </div>
 
-    <!-- direita: QR (em destaque) e botão Voltar ao topo abaixo -->
+    <!-- direita: QR em destaque (legenda 3 linhas centrada no topo da imagem) e botão abaixo -->
     <div class="footer-right">
       <figure class="qr-wrapper" aria-hidden="false">
-        <figcaption class="qr-caption">
-          QR Code — aponte a câmera do celular.<br>ou toque na imagem.
+        <!-- legenda dividida em 3 linhas (cada <span> é uma "parte") -->
+        <figcaption class="qr-caption" aria-hidden="false">
+          <span class="qr-line">QR Code —</span>
+          <span class="qr-line">aponte a câmera do celular</span>
+          <span class="qr-line">ou toque na imagem.</span>
         </figcaption>
 
         <a
